@@ -1,17 +1,27 @@
+import argparse
 import os
 from openai import OpenAI
 import openai
 from tool import videoreader
+
+MODEL="gpt-4o-2024-08-06"
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--dimension",
+    type=str,
+    default="imaging_quality",
+    choices=["imaging_quality", "aesthetic_quality"],
+)
+args = parser.parse_args()
+
 # 创建一个OpenAI客户端实例
 client = OpenAI(
     api_key="",
     base_url=""  # 替换为你的自定义API域
 )
 
-## Set the API key and model name
-MODEL="gpt-4o-2024-08-06"
-
-dimension = 'imaging_quality'
+dimension = args.dimension
 from PromptTemplate4GPTeval import Prompt4ImagingQuality
 prompt_template = Prompt4ImagingQuality
 

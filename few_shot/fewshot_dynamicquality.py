@@ -1,17 +1,32 @@
+import argparse
 import os
 from openai import OpenAI
 import openai
 from tool import videoreader
+
+MODEL="gpt-4o-2024-08-06"
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--dimension",
+    type=str,
+    default="temporal_consistency",
+    choices=["temporal_consistency", "motion_effects"],
+)
+args = parser.parse_args()
+
+# 创建一个OpenAI客户端实例
+client = OpenAI(
+    api_key="",
+    base_url=""  # 替换为你的自定义API域
+)
 
 client = OpenAI(
     api_key="",
     base_url=""  
 )
 
-## Set the API key and model name
-MODEL="gpt-4o-2024-08-06"
-
-dimension = 'temporal_consistency'
+dimension = args.dimension
 from PromptTemplate4GPTeval import Prompt4TemperalConsistency
 prompt_template = Prompt4TemperalConsistency
 
